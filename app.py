@@ -48,12 +48,29 @@ def compareCol():
             tmpObj['oracleData'].remove(pgItem)
             tmpObj['pgData'].remove(pgItem)
 
-def writeResult():
-    with open('data.log', 'w') as file:
-        file.write(str(tmpObj))
+def formatPGResult():
+    result = []
+    result.append('\n'.join(['title: PGSQL统计数据',
+        'table: {}'.format(pgconfig['table']),
+        'colume: {}'.format(tmpObj['col_name']),
+        'tag: 下面数据只有PGSQL有']))
+    result.append('\n'.join(tmpObj['pgData']))
+    with open('pgsql_result.log', 'w') as file:
+        file.write('\n'.join(result))
+
+def formatOracleResult():
+    result = []
+    result.append('\n'.join(['title: Oracle统计数据',
+        'talbe: {}'.format(oracle_config['table']),
+        'colume: {}'.format(tmpObj['col_name']),
+        'tag: 下面数据只有Oracle拥有']))
+    result.append('\n'.join(tmpObj['oracleData']))
+    with open('oracle_result.log', 'w') as file:
+        file.write('\n'.join(result))
 
 if __name__ == '__main__':
     getPg()
     getOracle(tmpObj['col_name'])
     compareCol()
-    writeResult()
+    formatPGResult()
+    formatOracleResult()
