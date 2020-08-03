@@ -20,9 +20,10 @@ RUN rm -rf /etc/yum.repos.d/* \
 
 COPY ./docker/pip.conf /root/.pip/pip.conf
 
-WORKDIR /webapp
 
 RUN python3 -m pip install -U pip \
-	&& pip3 install psycopg2 cx_oracle 
+	&& pip3 install wheel psycopg2 cx_oracle 
 
-COPY webapp webapp
+COPY ./webapp webapp
+
+WORKDIR /webapp/webapp
