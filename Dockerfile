@@ -12,7 +12,7 @@ RUN rm -rf /etc/yum.repos.d/* \
 	&& mv CentOS-Base.repo epel-7.repo /etc/yum.repos.d/ \
 	&& yum clean all \
 	&& yum makecache \
-	&& yum install -y unzip libaio python3-devel python3-pip libpqxx-devel gcc \
+	&& yum install -y unzip libaio python3-devel python3-pip python3-wheel libpqxx-devel gcc \
 	&& unzip instantclient-basiclite-linux.x64-12.2.0.1.0.zip -d /opt \
 	&& mv vimrc /root/.vimrc \
 	&& rm -rf /docker \
@@ -22,8 +22,8 @@ COPY ./docker/pip.conf /root/.pip/pip.conf
 
 
 RUN python3 -m pip install -U pip \
-	&& pip3 install wheel psycopg2 cx_oracle 
+	&& pip3 install psycopg2 cx_oracle 
 
-COPY ./webapp webapp
+COPY ./webapp /webapp/webapp
 
 WORKDIR /webapp/webapp
